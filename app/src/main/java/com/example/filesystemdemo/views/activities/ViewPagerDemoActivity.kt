@@ -41,7 +41,7 @@ class ViewPagerDemoActivity : FragmentActivity(), ISubmitItem {
     }
 
     private fun configureViewPager() {
-        val adapter = ScreenSlidePagerAdapter(this@ViewPagerDemoActivity)
+        val adapter = ScreenSlidePagerAdapter(this)
         binding.viewPagerCartOptions.adapter = adapter
         TabLayoutMediator(binding.tabCartOptions, binding.viewPagerCartOptions) { tab, position ->
             when (position) {
@@ -61,7 +61,7 @@ class ViewPagerDemoActivity : FragmentActivity(), ISubmitItem {
         collectedList.addAll(items)
     }
 
-    inner class ScreenSlidePagerAdapter(myActivity: ViewPagerDemoActivity) :
+    inner class ScreenSlidePagerAdapter(myActivity: FragmentActivity) :
         FragmentStateAdapter(myActivity) {
         override fun getItemCount(): Int = 2
         override fun createFragment(position: Int): Fragment {
