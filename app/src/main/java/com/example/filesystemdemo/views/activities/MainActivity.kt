@@ -38,6 +38,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
         binding.btnViewPagerDemoActivity.setOnClickListener { goToViewPagerDemo() }
+        binding.btnViewPagerDemoFragment.setOnClickListener { goToViewPagerDemoWithFragment() }
     }
 
     private fun storagePermissionGranted() = STORAGE_PERMISSIONS.all {
@@ -74,6 +75,13 @@ class MainActivity : AppCompatActivity() {
 
     private fun goToViewPagerDemo() {
         Intent(this@MainActivity, ViewPagerDemoActivity::class.java).apply {
+            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            startActivity(this)
+        }
+    }
+
+    private fun goToViewPagerDemoWithFragment() {
+        Intent(this@MainActivity, ViewPagerDemoActivityWithFragment::class.java).apply {
             addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             startActivity(this)
         }
