@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
                 requestPermission(LOCATION_PERMISSIONS, LOCATION_PERMISSIONS_CODE)
             }
         }
-        binding.btnViewPagerDemo.setOnClickListener { goToViewPagerDemo() }
+        binding.btnViewPagerDemoActivity.setOnClickListener { goToViewPagerDemo() }
     }
 
     private fun storagePermissionGranted() = STORAGE_PERMISSIONS.all {
