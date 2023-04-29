@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="top_margin_to_parent">36dp</dimen>
+    <dimen name="right_margin_to_parent">36dp</dimen>
+    <dimen name="left_margin_to_parent">36dp</dimen>
+    <dimen name="bottom_margin_to_parent">36dp</dimen>
+    <dimen name="all_margin_to_parent">8dp</dimen>
+</resources>

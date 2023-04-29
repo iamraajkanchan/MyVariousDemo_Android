@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Programming/Android/Myself/FileSystemDemo_Android/app/src/main/res/drawable/custom_check_box.xml" value="0.1735" />
+        <entry key="..\:/Programming/Android/Myself/FileSystemDemo_Android/app/src/main/res/drawable/icon_check_box_checked.xml" value="0.1735" />
+        <entry key="..\:/Programming/Android/Myself/FileSystemDemo_Android/app/src/main/res/drawable/icon_check_box_unchecked.xml" value="0.1735" />
+        <entry key="..\:/Programming/Android/Myself/FileSystemDemo_Android/app/src/main/res/layout/activity_file_system.xml" value="0.1796875" />
+        <entry key="..\:/Programming/Android/Myself/FileSystemDemo_Android/app/src/main/res/layout/activity_main.xml" value="0.1796875" />
+        <entry key="..\:/Programming/Android/Myself/FileSystemDemo_Android/app/src/main/res/layout/activity_network_info.xml" value="0.1796875" />
+        <entry key="..\:/Programming/Android/Myself/FileSystemDemo_Android/app/src/main/res/layout/activity_view_pager_demo.xml" value="0.1796875" />
+        <entry key="..\:/Programming/Android/Myself/FileSystemDemo_Android/app/src/main/res/layout/cart_item.xml" value="0.3333333333333333" />
+        <entry key="..\:/Programming/Android/Myself/FileSystemDemo_Android/app/src/main/res/layout/collected_item.xml" value="0.1796875" />
+        <entry key="..\:/Programming/Android/Myself/FileSystemDemo_Android/app/src/main/res/layout/fragment_collected.xml" value="0.165625" />
+        <entry key="..\:/Programming/Android/Myself/FileSystemDemo_Android/app/src/main/res/layout/fragment_demo.xml" value="0.165625" />
+        <entry key="..\:/Programming/Android/Myself/FileSystemDemo_Android/app/src/main/res/layout/fragment_pending.xml" value="0.1796875" />
+        <entry key="..\:/Programming/Android/Myself/FileSystemDemo_Android/app/src/main/res/layout/network_info_item.xml" value="0.17864583333333334" />
+        <entry key="..\:/Programming/Android/Myself/FileSystemDemo_Android/app/src/main/res/layout/pending_item.xml" value="0.1796875" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>
