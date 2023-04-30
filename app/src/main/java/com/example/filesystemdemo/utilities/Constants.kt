@@ -1,10 +1,5 @@
 package com.example.filesystemdemo.utilities
 
-import androidx.coordinatorlayout.widget.CoordinatorLayout
-import com.google.android.material.snackbar.Snackbar
-
 const val TAG: String = "FileSystemDemo"
-
-fun showSnackBar(view: CoordinatorLayout, message: String) {
-    Snackbar.make(view, message, Snackbar.LENGTH_LONG).show()
-}
+const val ARG_FILE_NAME: String = "file name argument"
+const val ARG_FOLDER_NAME: String = "folder name argument"
