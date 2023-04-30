@@ -19,6 +19,9 @@
         android:theme="@style/Theme.FileSystemDemo"
         tools:targetApi="31">
         <activity
+            android:name=".views.activities.ReadFileActivity"
+            android:exported="false" />
+        <activity
             android:name=".views.activities.ViewPagerDemoActivityWithFragment"
             android:exported="false" />
         <activity
