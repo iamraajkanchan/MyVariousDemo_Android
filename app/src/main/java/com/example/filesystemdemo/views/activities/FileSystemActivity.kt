@@ -67,20 +67,24 @@ class FileSystemActivity : AppCompatActivity() {
     }
 
     private fun writeInFile() {
-        if (file.exists()) {
-            try {
-                val writer = FileWriter(file, true)
-                writer.append("Hello World\n")
-                writer.flush()
-                writer.close()
-                utility.showSnackBar("Completed!")
-            } catch (e: IOException) {
-                utility.showSnackBar(e.message ?: "Something went wrong!!!")
+        if (binding.edtFileContent.text.isNotEmpty()) {
+            if (file.exists()) {
+                try {
+                    val writer = FileWriter(file, true)
+                    writer.append("${binding.edtFileContent.text}\n")
+                    writer.flush()
+                    writer.close()
+                    utility.showSnackBar("Completed!")
+                } catch (e: IOException) {
+                    utility.showSnackBar(e.message ?: "Something went wrong!!!")
+                }
+            } else {
+                if (file.createNewFile()) {
+                    utility.showSnackBar("${file.name} created")
+                }
             }
         } else {
-            if (file.createNewFile()) {
-                utility.showSnackBar("${file.name} created")
-            }
+            utility.showSnackBar("Please write something to write")
         }
     }
 
