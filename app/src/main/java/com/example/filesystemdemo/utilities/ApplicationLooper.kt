@@ -14,6 +14,7 @@ class ApplicationLooper : Thread() {
         looper = Looper.myLooper()
         synchronized(startMonitor) {
             started = true
+            (startMonitor as java.lang.Object).notifyAll()
         }
         Looper.loop()
     }
@@ -23,7 +24,7 @@ class ApplicationLooper : Thread() {
         synchronized(startMonitor) {
             while (!started) {
                 try {
-
+                    (startMonitor as java.lang.Object).wait(10)
                 } catch (e: InterruptedException) {
                     e.printStackTrace()
                 }
