@@ -58,6 +58,7 @@ class ViewPagerDemoActivity : FragmentActivity(), ISubmitItem {
     override fun addItemIntoCart(items: ArrayList<CartModel>) {
         pendingList.removeAll(items.toSet())
         pendingFragment.updateAdapter()
+        binding.viewPagerCartOptions.setCurrentItem(1, true)
         collectedList.addAll(items)
     }
 
