@@ -46,6 +46,7 @@ class MainActivity : AppCompatActivity() {
                 requestPermission(STORAGE_PERMISSIONS, WORKER_PERMISSIONS_CODE)
             }
         }
+        binding.btnJobSchedulerDemo.setOnClickListener { goToJobSchedulerDemo() }
     }
 
     private fun storagePermissionGranted() = STORAGE_PERMISSIONS.all {
@@ -101,6 +102,13 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun goToJobSchedulerDemo() {
+        Intent(this@MainActivity, JobSchedulerDemo::class.java).apply {
+            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            startActivity(this)
+        }
+    }
+
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -145,7 +153,7 @@ class MainActivity : AppCompatActivity() {
                                 ) {
                                     Snackbar.make(
                                         binding.mainCoordinator,
-                                        "Location Need Storage Permission",
+                                        "Application Need Location Permission",
                                         Snackbar.LENGTH_LONG
                                     ).show()
                                 }
