@@ -39,6 +39,13 @@ class MainActivity : AppCompatActivity() {
         }
         binding.btnViewPagerDemoActivity.setOnClickListener { goToViewPagerDemo() }
         binding.btnViewPagerDemoFragment.setOnClickListener { goToViewPagerDemoWithFragment() }
+        binding.btnWorkManagerDemo.setOnClickListener {
+            if (storagePermissionGranted()) {
+                goToWorkMangerDemo()
+            } else {
+                requestPermission(STORAGE_PERMISSIONS, WORKER_PERMISSIONS_CODE)
+            }
+        }
     }
 
     private fun storagePermissionGranted() = STORAGE_PERMISSIONS.all {
@@ -82,6 +89,13 @@ class MainActivity : AppCompatActivity() {
 
     private fun goToViewPagerDemoWithFragment() {
         Intent(this@MainActivity, ViewPagerDemoActivityWithFragment::class.java).apply {
+            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            startActivity(this)
+        }
+    }
+
+    private fun goToWorkMangerDemo() {
+        Intent(this@MainActivity, WorkManagerDemo::class.java).apply {
             addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             startActivity(this)
         }
@@ -141,6 +155,30 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+        if (requestCode == WORKER_PERMISSIONS_CODE) {
+            STORAGE_PERMISSIONS.forEach { s ->
+                for (permission in permissions) {
+                    if (permission == s) {
+                        for (grantResult in grantResults) {
+                            if (grantResult == PackageManager.PERMISSION_GRANTED) {
+                                goToWorkMangerDemo()
+                            } else {
+                                if (ActivityCompat.shouldShowRequestPermissionRationale(
+                                        this@MainActivity, s
+                                    )
+                                ) {
+                                    Snackbar.make(
+                                        binding.mainCoordinator,
+                                        "Application Need Storage Permission",
+                                        Snackbar.LENGTH_LONG
+                                    ).show()
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 
     companion object {
@@ -155,6 +193,7 @@ class MainActivity : AppCompatActivity() {
         }.toTypedArray()
 
         const val STORAGE_PERMISSIONS_CODE = 11
+        const val WORKER_PERMISSIONS_CODE = 12
         val STORAGE_PERMISSIONS = mutableListOf(
             Manifest.permission.READ_EXTERNAL_STORAGE
         ).apply {
