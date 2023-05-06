@@ -1,8 +1,10 @@
 package com.example.filesystemdemo.utilities
 
+import android.app.ActivityManager
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.widget.Toast
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import com.google.android.material.snackbar.Snackbar
@@ -11,14 +13,16 @@ import java.util.*
 
 class Utility(private val context: Context) {
 
-    private lateinit var view: CoordinatorLayout
+    private var view: CoordinatorLayout? = null
 
     constructor(context: Context, view: CoordinatorLayout) : this(context) {
         this.view = view
     }
 
     fun showSnackBar(message: String) {
-        Snackbar.make(view, message, Snackbar.LENGTH_LONG).show()
+        view?.let {
+            Snackbar.make(it, message, Snackbar.LENGTH_LONG).show()
+        } ?: Toast.makeText(context, message, Toast.LENGTH_LONG).show()
     }
 
     fun getCurrentTime(): String {
@@ -35,5 +39,13 @@ class Utility(private val context: Context) {
         drawable.setBounds(0, 0, canvas.width, canvas.height)
         drawable.draw(canvas)
         return bitmap
+    }
+
+    fun <T> isServiceRunning(kClass: Class<T>): Boolean {
+        val activityManager = context.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+        for (service in activityManager.getRunningServices(Integer.MAX_VALUE)) {
+            return kClass.name.equals(service.service.className)
+        }
+        return false
     }
 }

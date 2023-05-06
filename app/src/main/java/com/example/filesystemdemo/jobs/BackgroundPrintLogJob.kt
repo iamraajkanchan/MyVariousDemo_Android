@@ -24,6 +24,7 @@ class BackgroundPrintLogJob : JobService() {
     }
 
     override fun onStartJob(params: JobParameters?): Boolean {
+        utility.showSnackBar("Job Started")
         println("BackgroundPrintLogJob :: onStartJob :: Running...")
         val notificationManager: NotificationManager =
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
@@ -57,6 +58,7 @@ class BackgroundPrintLogJob : JobService() {
     }
 
     override fun onStopJob(params: JobParameters?): Boolean {
+        utility.showSnackBar("Job Stopped")
         println("BackgroundPrintLogJob :: onStopJob :: Running...")
         return false
     }

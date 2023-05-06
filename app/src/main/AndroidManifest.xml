@@ -10,7 +10,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
         android:allowBackup="true"
@@ -23,6 +23,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FileSystemDemo"
         tools:targetApi="31">
+        <activity
+            android:name=".views.activities.AlarmManagerDemo"
+            android:exported="false" />
         <activity
             android:name=".views.activities.JobSchedulerDemo"
             android:exported="false" />
@@ -57,6 +60,10 @@
         <service
             android:name=".jobs.BackgroundPrintLogJob"
             android:permission="android.permission.BIND_JOB_SERVICE" />
+        <service
+            android:name=".services.LogNotificationService"
+            android:icon="@drawable/ic_launcher_foreground"
+            android:label="Log Notification Service" />
     </application>
 
 </manifest>

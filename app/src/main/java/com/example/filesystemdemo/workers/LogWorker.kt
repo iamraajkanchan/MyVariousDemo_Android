@@ -11,8 +11,6 @@ import androidx.work.ForegroundInfo
 import androidx.work.WorkerParameters
 import com.example.filesystemdemo.R
 import com.example.filesystemdemo.utilities.*
-import java.text.SimpleDateFormat
-import java.util.*
 
 private const val LOG_NOTIFICATION_ID: Int = 0
 
@@ -32,11 +30,6 @@ class LogWorker(private val context: Context, params: WorkerParameters) :
         return Result.success()
     }
 
-    private fun getCurrentTime(): String {
-        val timeFormat = SimpleDateFormat("dd:MM:yy HH:mm:ss", Locale.ENGLISH)
-        return timeFormat.format(Calendar.getInstance().time)
-    }
-
     private fun createNotification(notificationManager: NotificationManager): Notification {
         val notification =
             if (Build.VERSION.SDK_INT > Build.VERSION_CODES.O) {
@@ -54,7 +47,7 @@ class LogWorker(private val context: Context, params: WorkerParameters) :
                         setLargeIcon(utility.vectorToBitmap(R.drawable.ic_launcher_foreground))
                         setSmallIcon(R.drawable.icon_delete)
                         setContentTitle(NOTIFICATION_TITLE)
-                        setContentText("${getCurrentTime()} :: Logging From WorkManager")
+                        setContentText("${utility.getCurrentTime()} :: Logging From WorkManager")
                         setAutoCancel(false)
                         style = Notification.BigTextStyle().bigText("")
                     }
@@ -66,7 +59,7 @@ class LogWorker(private val context: Context, params: WorkerParameters) :
                     setLargeIcon(utility.vectorToBitmap(R.drawable.ic_launcher_foreground))
                     setSmallIcon(R.drawable.icon_delete)
                     setContentTitle("Log Service")
-                    setContentText("${getCurrentTime()} :: Logging From WorkManager")
+                    setContentText("${utility.getCurrentTime()} :: Logging From WorkManager")
                     setAutoCancel(false)
                 }
                 builder.build()

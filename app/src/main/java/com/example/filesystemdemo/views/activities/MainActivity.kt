@@ -47,6 +47,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
         binding.btnJobSchedulerDemo.setOnClickListener { goToJobSchedulerDemo() }
+        binding.btnAlarmManagerDemo.setOnClickListener { goToAlarmManagerDemo() }
     }
 
     private fun storagePermissionGranted() = STORAGE_PERMISSIONS.all {
@@ -104,6 +105,13 @@ class MainActivity : AppCompatActivity() {
 
     private fun goToJobSchedulerDemo() {
         Intent(this@MainActivity, JobSchedulerDemo::class.java).apply {
+            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            startActivity(this)
+        }
+    }
+
+    private fun goToAlarmManagerDemo() {
+        Intent(this@MainActivity, AlarmManagerDemo::class.java).apply {
             addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             startActivity(this)
         }
