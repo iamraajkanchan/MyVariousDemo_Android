@@ -27,7 +27,7 @@ class FileSystemActivity : AppCompatActivity() {
         downloadFolder = ActivityCompat.getExternalFilesDirs(
             this@FileSystemActivity, Environment.DIRECTORY_DOWNLOADS
         )[0]
-        utility = Utility(binding.fileSystemCoordinator)
+        utility = Utility(this@FileSystemActivity, binding.fileSystemCoordinator)
         file = File(downloadFolder.absolutePath, "personal.txt")
     }
 
@@ -37,6 +37,7 @@ class FileSystemActivity : AppCompatActivity() {
         binding.btnCreateFile.setOnClickListener { createFileInDownload() }
         binding.btnReadFile.setOnClickListener { goToReadFile() }
         binding.btnWriteFile.setOnClickListener { writeInFile() }
+        binding.btnCreateCustomFolder.setOnClickListener { createCustomFolder() }
     }
 
     private fun createDownloadFolder() {
@@ -84,7 +85,7 @@ class FileSystemActivity : AppCompatActivity() {
                 }
             }
         } else {
-            utility.showSnackBar("Please write something to write")
+            utility.showSnackBar("Please write some text in the file")
         }
     }
 
@@ -94,5 +95,37 @@ class FileSystemActivity : AppCompatActivity() {
             putExtra(ARG_FOLDER_NAME, Environment.DIRECTORY_DOWNLOADS)
             startActivity(this)
         }
+    }
+
+    private fun createCustomFolder() {
+        if (binding.edtFileContent.text.isNotEmpty()) {
+            val downloadFolder =
+                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+            if (!downloadFolder.exists()) {
+                downloadFolder.mkdir()
+            } else {
+                createFileInCustomFolder(downloadFolder)
+            }
+        } else {
+            utility.showSnackBar("Please write some text in the file.")
+        }
+    }
+
+    private fun createFileInCustomFolder(folder: File) {
+        val logFile = File(folder.absolutePath, "CustomFolderLog.txt")
+        if (!logFile.exists()) {
+            if (logFile.createNewFile()) {
+                writeInFile(logFile)
+            }
+        } else {
+            writeInFile(logFile)
+        }
+    }
+
+    private fun writeInFile(file: File) {
+        val writer = FileWriter(file, true)
+        writer.append(utility.getCurrentTime()).append(" ").append(binding.edtFileContent.text).append("\n")
+        writer.flush()
+        writer.close()
     }
 }
