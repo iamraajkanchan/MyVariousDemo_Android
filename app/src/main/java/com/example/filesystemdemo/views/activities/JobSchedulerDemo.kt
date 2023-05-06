@@ -11,7 +11,7 @@ import com.example.filesystemdemo.jobs.BackgroundPrintLogJob
 import java.util.concurrent.TimeUnit
 
 private const val JOB_ID = 988
-private const val REFRESH_TIME_INTERVAL = (2 * 60 * 1000).toLong()
+private const val REFRESH_TIME_INTERVAL = (5 * 60 * 1000).toLong()
 
 class JobSchedulerDemo : AppCompatActivity() {
 
