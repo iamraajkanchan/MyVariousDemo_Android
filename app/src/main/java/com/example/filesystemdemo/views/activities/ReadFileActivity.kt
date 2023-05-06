@@ -29,7 +29,7 @@ class ReadFileActivity : AppCompatActivity() {
         downloadFolder = ActivityCompat.getExternalFilesDirs(
             this@ReadFileActivity, intent.getStringExtra(ARG_FOLDER_NAME)
         )[0]
-        utility = Utility(binding.readFileCoordinator)
+        utility = Utility(this@ReadFileActivity, binding.readFileCoordinator)
         readLooper = ApplicationLooper()
         readLooper.start()
         readLooper.waitForStart()
