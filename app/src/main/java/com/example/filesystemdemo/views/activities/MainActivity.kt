@@ -48,6 +48,7 @@ class MainActivity : AppCompatActivity() {
         }
         binding.btnJobSchedulerDemo.setOnClickListener { goToJobSchedulerDemo() }
         binding.btnAlarmManagerDemo.setOnClickListener { goToAlarmManagerDemo() }
+        binding.btnBroadcastReceiverDemo.setOnClickListener { goToBroadcastReceiverDemo() }
     }
 
     private fun storagePermissionGranted() = STORAGE_PERMISSIONS.all {
@@ -112,6 +113,13 @@ class MainActivity : AppCompatActivity() {
 
     private fun goToAlarmManagerDemo() {
         Intent(this@MainActivity, AlarmManagerDemo::class.java).apply {
+            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            startActivity(this)
+        }
+    }
+
+    private fun goToBroadcastReceiverDemo() {
+        Intent(this@MainActivity, BroadcastReceiverDemo::class.java).apply {
             addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             startActivity(this)
         }

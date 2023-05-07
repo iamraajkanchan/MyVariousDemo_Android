@@ -81,4 +81,6 @@ dependencies {
     testImplementation "androidx.arch.core:core-testing:$arch_version"
     // optional - Test helpers for Lifecycle runtime
     testImplementation "androidx.lifecycle:lifecycle-runtime-testing:$lifecycle_version"
+
+    implementation "androidx.legacy:legacy-support-core-utils:1.0.0"
 }

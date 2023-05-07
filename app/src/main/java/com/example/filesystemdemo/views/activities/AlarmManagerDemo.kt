@@ -4,7 +4,6 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.filesystemdemo.databinding.ActivityAlarmManagerDemoBinding
@@ -24,22 +23,18 @@ class AlarmManagerDemo : AppCompatActivity() {
         binding = ActivityAlarmManagerDemoBinding.inflate(layoutInflater)
         setContentView(binding.root)
         utility = Utility(this@AlarmManagerDemo)
+        binding.btnInfiniteBackgroundService.setOnClickListener { runService() }
     }
 
     override fun onStart() {
         super.onStart()
-        binding.btnInfiniteBackgroundService.setOnClickListener { runService() }
     }
 
     private fun runService() {
-        Intent(this@AlarmManagerDemo, LogNotificationService::class.java).apply {
-            if (utility.isServiceRunning(LogNotificationService::class.java)) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    startForegroundService(this)
-                } else {
-                    startService(this)
-                }
-            }
+        val logNotificationServiceIntent =
+            Intent(this@AlarmManagerDemo, LogNotificationService::class.java)
+        if (!utility.isServiceRunning(LogNotificationService::class.java)) {
+            startService(logNotificationServiceIntent)
         }
     }
 
@@ -62,7 +57,19 @@ class AlarmManagerDemo : AppCompatActivity() {
         )
     }
 
+    override fun onStop() {
+        super.onStop()
+    }
+
     override fun onDestroy() {
+        // To Intentionally Kill A Service.
+        /*
+         if (utility.isServiceRunning(LogNotificationService::class.java)) {
+             Intent(this@AlarmManagerDemo, LogNotificationService::class.java).apply {
+                 stopService(this)
+             }
+         }
+         */
         super.onDestroy()
     }
 }

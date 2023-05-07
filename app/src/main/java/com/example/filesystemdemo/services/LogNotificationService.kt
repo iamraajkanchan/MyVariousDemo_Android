@@ -22,6 +22,7 @@ class LogNotificationService : Service() {
     private val utility: Utility by lazy { Utility(applicationContext) }
 
     override fun onCreate() {
+        utility.showSnackBar("Service Started")
         super.onCreate()
     }
 
@@ -62,6 +63,8 @@ class LogNotificationService : Service() {
     }
 
     override fun onDestroy() {
+        utility.showSnackBar("Service Destroyed")
+        stopSelf()
         super.onDestroy()
     }
 
