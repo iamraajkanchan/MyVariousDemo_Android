@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.filesystemdemo">
 
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         android:maxSdkVersion="29"
@@ -64,7 +65,7 @@
             android:name=".broadcasts.LogNotificationReceiver"
             android:exported="true">
             <intent-filter>
-                <action android:name="log_notification_receiver" />
+                <action android:name="com.example.filesystemdemo.log_notification_receiver" />
             </intent-filter>
         </receiver>
 

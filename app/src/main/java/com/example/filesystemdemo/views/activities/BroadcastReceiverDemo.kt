@@ -3,6 +3,7 @@ package com.example.filesystemdemo.views.activities
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.filesystemdemo.broadcasts.LOG_NOTIFICATION_RECEIVER_ACTION
 import com.example.filesystemdemo.broadcasts.LogNotificationReceiver
 import com.example.filesystemdemo.databinding.ActivityBroadCastReceiverDemoBinding
 
@@ -22,9 +23,8 @@ class BroadcastReceiverDemo : AppCompatActivity() {
     }
 
     private fun sendCustomBroadcast() {
-        val intent = Intent().apply {
-            action = "log_notification_receiver"
-            setClass(this@BroadcastReceiverDemo, LogNotificationReceiver::class.java)
+        val intent = Intent(this@BroadcastReceiverDemo, LogNotificationReceiver::class.java).apply {
+            action = LOG_NOTIFICATION_RECEIVER_ACTION
         }
         sendBroadcast(intent)
     }

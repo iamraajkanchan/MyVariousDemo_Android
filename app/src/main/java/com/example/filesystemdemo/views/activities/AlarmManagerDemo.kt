@@ -6,6 +6,10 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import com.example.filesystemdemo.broadcasts.LOG_NOTIFICATION_RECEIVER_ACTION
+import com.example.filesystemdemo.broadcasts.LogNotificationReceiver
 import com.example.filesystemdemo.databinding.ActivityAlarmManagerDemoBinding
 import com.example.filesystemdemo.services.LogNotificationService
 import com.example.filesystemdemo.utilities.Utility
@@ -23,35 +27,37 @@ class AlarmManagerDemo : AppCompatActivity() {
         binding = ActivityAlarmManagerDemoBinding.inflate(layoutInflater)
         setContentView(binding.root)
         utility = Utility(this@AlarmManagerDemo)
-        binding.btnInfiniteBackgroundService.setOnClickListener { runService() }
+
     }
 
     override fun onStart() {
+        binding.btnLogNotificationBroadcastAlarm.setOnClickListener { runAlarmManagerForLogNotificationReceiver() }
         super.onStart()
     }
 
     private fun runService() {
         val logNotificationServiceIntent =
             Intent(this@AlarmManagerDemo, LogNotificationService::class.java)
-        if (!utility.isServiceRunning(LogNotificationService::class.java)) {
-            startService(logNotificationServiceIntent)
-        }
+        val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
     }
 
-    private fun runAlarmManager() {
-        val broadcastIntent = Intent("restart_service")
-        val intervals = TimeUnit.MINUTES.toMinutes(5)
+    private fun runAlarmManagerForLogNotificationReceiver() {
+        val broadcastIntent =
+            Intent(this@AlarmManagerDemo, LogNotificationReceiver::class.java).apply {
+                action = LOG_NOTIFICATION_RECEIVER_ACTION
+            }
+        val intervals = TimeUnit.MINUTES.toMillis(5)
+        println("AlarmManagerDemo :: runAlarmManagerForLogNotificationReceiver :: intervals :: $intervals")
         val triggerIntervals = System.currentTimeMillis() + intervals
         val operation: PendingIntent = PendingIntent.getBroadcast(
             this@AlarmManagerDemo,
             ALARM_CODE,
             broadcastIntent,
-            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-        )
+            PendingIntent.FLAG_UPDATE_CURRENT
+        );
         val alarmManager: AlarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        alarmManager.setInexactRepeating(
-            AlarmManager.ELAPSED_REALTIME_WAKEUP,
-            triggerIntervals,
+        alarmManager.setRepeating(
+            AlarmManager.RTC_WAKEUP, triggerIntervals,
             intervals,
             operation
         )
