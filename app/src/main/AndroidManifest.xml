@@ -69,6 +69,14 @@
             </intent-filter>
         </receiver>
 
+        <receiver
+            android:name=".broadcasts.LogNotificationServiceReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.example.filesystemdemo.log_notification_service_broadcast_action" />
+            </intent-filter>
+        </receiver>
+
         <service
             android:name=".jobs.BackgroundPrintLogJob"
             android:permission="android.permission.BIND_JOB_SERVICE" />
