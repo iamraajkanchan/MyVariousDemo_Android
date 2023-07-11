@@ -51,6 +51,7 @@ class MainActivity : AppCompatActivity() {
         binding.btnBroadcastReceiverDemo.setOnClickListener { goToBroadcastReceiverDemo() }
         binding.btnTimerDemo.setOnClickListener { goToTimerDemo() }
         binding.btnPersistTimerDemo.setOnClickListener { goToPersistTimerDemo() }
+        binding.btnConcurrencyDemo.setOnClickListener { goToConcurrencyDemo() }
     }
 
     private fun storagePermissionGranted() = STORAGE_PERMISSIONS.all {
@@ -137,6 +138,13 @@ class MainActivity : AppCompatActivity() {
     private fun goToPersistTimerDemo() {
         Intent(this@MainActivity, PersistTimerDemo::class.java).apply {
             addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            startActivity(this)
+        }
+    }
+
+    private fun goToConcurrencyDemo() {
+        Intent(this@MainActivity, ConcurrencyDemoActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
             startActivity(this)
         }
     }
