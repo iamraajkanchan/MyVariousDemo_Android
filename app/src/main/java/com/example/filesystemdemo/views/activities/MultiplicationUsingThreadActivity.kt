@@ -20,11 +20,9 @@ class MultiplicationUsingThreadActivity : AppCompatActivity() {
     private fun configureButtons() {
         binding.btnCalculate.setOnClickListener {
             if (!binding.edtNumber.text.isNullOrBlank()) {
-                val thread =
-                    Thread(
-                        MultiplicationCalculator(binding.edtNumber.text.toString().toLong(), binding)
-                    )
-                thread.start()
+                Thread(
+                    MultiplicationCalculator(binding.edtNumber.text.toString().toLong(), binding)
+                ).start()
             } else {
                 Snackbar.make(
                     binding.coordinator, "Please Enter a valid number!!!", Snackbar.LENGTH_LONG
