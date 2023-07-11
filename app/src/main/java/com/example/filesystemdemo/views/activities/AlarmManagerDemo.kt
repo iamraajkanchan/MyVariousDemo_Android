@@ -6,13 +6,11 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.activity.result.ActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import com.example.filesystemdemo.broadcasts.LOG_NOTIFICATION_RECEIVER_ACTION
+import com.example.filesystemdemo.broadcasts.LocationNotificationReceiver
 import com.example.filesystemdemo.broadcasts.LogNotificationReceiver
 import com.example.filesystemdemo.broadcasts.LogNotificationServiceReceiver
 import com.example.filesystemdemo.databinding.ActivityAlarmManagerDemoBinding
-import com.example.filesystemdemo.services.LogNotificationService
 import com.example.filesystemdemo.utilities.Utility
 import java.util.concurrent.TimeUnit
 
@@ -34,6 +32,7 @@ class AlarmManagerDemo : AppCompatActivity() {
     override fun onStart() {
         binding.btnLogNotificationBroadcastAlarm.setOnClickListener { runAlarmManagerForLogNotificationReceiver() }
         binding.btnInfiniteBackgroundService.setOnClickListener { runAlarmManagerForLogNotificationServiceReceiver() }
+        binding.btnInfiniteLocationService.setOnClickListener { runAlarmManagerForLocationNotificationServiceReceiver() }
         super.onStart()
     }
 
@@ -64,6 +63,24 @@ class AlarmManagerDemo : AppCompatActivity() {
         val broadcastIntent =
             Intent(this@AlarmManagerDemo, LogNotificationServiceReceiver::class.java).apply {
                 action = LogNotificationServiceReceiver.LOG_NOTIFICATION_SERVICE_BROADCAST_ACTION
+            }
+        val intervals = TimeUnit.MINUTES.toMillis(5L)
+        val timeTriggers = System.currentTimeMillis() + intervals
+        val operation: PendingIntent = PendingIntent.getBroadcast(
+            this@AlarmManagerDemo,
+            ALARM_CODE,
+            broadcastIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT
+        )
+        val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, timeTriggers, intervals, operation)
+    }
+
+    private fun runAlarmManagerForLocationNotificationServiceReceiver() {
+        println("LocationNotificationReceiver :: AlarmDemo :: runAlarmManagerForLocationNotificationServiceReceiver :: Running...")
+        val broadcastIntent =
+            Intent(this@AlarmManagerDemo, LocationNotificationReceiver::class.java).apply {
+                action = LocationNotificationReceiver.LOCATION_NOTIFICATION_BROADCAST_ACTION
             }
         val intervals = TimeUnit.MINUTES.toMillis(5L)
         val timeTriggers = System.currentTimeMillis() + intervals

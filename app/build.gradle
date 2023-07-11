@@ -46,6 +46,7 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 
+    // For WorkManager
     def work_version = "2.8.1"
     // (Java only)
     implementation "androidx.work:work-runtime:$work_version"
@@ -54,9 +55,11 @@ dependencies {
     // optional - Multi Process support
     implementation "androidx.work:work-multiprocess:$work_version"
 
+    // For Coroutines
     def coroutine_version = "1.6.1"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutine_version"
 
+    // For ViewModel & LiveData
     def lifecycle_version = "2.6.1"
     def arch_version = "2.2.0"
 
@@ -82,5 +85,6 @@ dependencies {
     // optional - Test helpers for Lifecycle runtime
     testImplementation "androidx.lifecycle:lifecycle-runtime-testing:$lifecycle_version"
 
-    implementation "androidx.legacy:legacy-support-core-utils:1.0.0"
+    // For Google Location Services
+    implementation 'com.google.android.gms:play-services-location:21.0.1'
 }

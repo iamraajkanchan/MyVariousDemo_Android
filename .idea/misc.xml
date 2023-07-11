@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
@@ -15,7 +14,9 @@
         <entry key="..\:/Programming/Android/Myself/FileSystemDemo_Android/app/src/main/res/layout/activity_job_scheduler_demo.xml" value="0.165625" />
         <entry key="..\:/Programming/Android/Myself/FileSystemDemo_Android/app/src/main/res/layout/activity_main.xml" value="0.1796875" />
         <entry key="..\:/Programming/Android/Myself/FileSystemDemo_Android/app/src/main/res/layout/activity_network_info.xml" value="0.1796875" />
+        <entry key="..\:/Programming/Android/Myself/FileSystemDemo_Android/app/src/main/res/layout/activity_persist_timer_demo.xml" value="0.1796875" />
         <entry key="..\:/Programming/Android/Myself/FileSystemDemo_Android/app/src/main/res/layout/activity_read_file.xml" value="0.1796875" />
+        <entry key="..\:/Programming/Android/Myself/FileSystemDemo_Android/app/src/main/res/layout/activity_timer_demo.xml" value="0.1796875" />
         <entry key="..\:/Programming/Android/Myself/FileSystemDemo_Android/app/src/main/res/layout/activity_view_pager_demo.xml" value="0.1796875" />
         <entry key="..\:/Programming/Android/Myself/FileSystemDemo_Android/app/src/main/res/layout/activity_view_pager_demo_with_fragment.xml" value="0.10666666666666667" />
         <entry key="..\:/Programming/Android/Myself/FileSystemDemo_Android/app/src/main/res/layout/activity_work_manager_demo.xml" value="0.1796875" />
@@ -30,7 +31,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_17" project-jdk-name="jbr-17" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
