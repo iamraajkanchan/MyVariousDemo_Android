@@ -22,14 +22,9 @@ class MultiplicationUsingThreadActivity : AppCompatActivity() {
             if (!binding.edtNumber.text.isNullOrBlank()) {
                 val thread =
                     Thread(
-                        MultiplicationCalculator(binding.edtNumber.text.toString().toInt(), binding)
+                        MultiplicationCalculator(binding.edtNumber.text.toString().toLong(), binding)
                     )
                 thread.start()
-                runOnUiThread {
-                    if (thread.state == Thread.State.TERMINATED) {
-                        binding.edtNumber.setText("")
-                    }
-                }
             } else {
                 Snackbar.make(
                     binding.coordinator, "Please Enter a valid number!!!", Snackbar.LENGTH_LONG

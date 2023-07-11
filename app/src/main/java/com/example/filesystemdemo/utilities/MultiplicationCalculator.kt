@@ -8,17 +8,26 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit
 
-class MultiplicationCalculator(private val number: Int, private val binding: ViewBinding) :
+class MultiplicationCalculator(private val number: Long, private val binding: ViewBinding) :
     Runnable {
     override fun run() {
-        for (i in 1 until 11) {
-            println("$number * $i = ${number * i}")
-            CoroutineScope(Dispatchers.Main + SupervisorJob()).launch {
-                if (binding is ActivityMultiplicatoinUsingThreadBinding) {
-                    binding.tvValue.text = (number * i).toString()
+        if (binding is ActivityMultiplicatoinUsingThreadBinding) {
+            with(binding) {
+                for (i in 1 until 12) {
+                    if (i < 11) {
+                        CoroutineScope(Dispatchers.Main + SupervisorJob()).launch {
+                            edtNumber.isEnabled = false
+                            tvValue.text = "$number * $i = ${number * i}"
+                        }
+                        TimeUnit.SECONDS.sleep(3)
+                    } else {
+                        CoroutineScope(Dispatchers.Main + SupervisorJob()).launch {
+                            edtNumber.isEnabled = true
+                            edtNumber.setText("")
+                        }
+                    }
                 }
             }
-            TimeUnit.SECONDS.sleep(3)
         }
     }
 }
