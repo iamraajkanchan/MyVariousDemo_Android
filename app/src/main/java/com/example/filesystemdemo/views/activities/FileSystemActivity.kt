@@ -8,6 +8,7 @@ import androidx.core.app.ActivityCompat
 import com.example.filesystemdemo.databinding.ActivityFileSystemBinding
 import com.example.filesystemdemo.utilities.ARG_FILE_NAME
 import com.example.filesystemdemo.utilities.ARG_FOLDER_NAME
+import com.example.filesystemdemo.utilities.GENERIC_ERROR_MESSAGE
 import com.example.filesystemdemo.utilities.Utility
 import java.io.File
 import java.io.FileWriter
@@ -112,20 +113,30 @@ class FileSystemActivity : AppCompatActivity() {
     }
 
     private fun createFileInCustomFolder(folder: File) {
-        val logFile = File(folder.absolutePath, "CustomFolderLog.txt")
-        if (!logFile.exists()) {
-            if (logFile.createNewFile()) {
+        try {
+            val logFile = File(folder.absolutePath, "CustomFolderLog.txt")
+            if (!logFile.exists()) {
+                if (logFile.createNewFile()) {
+                    writeInFile(logFile)
+                }
+            } else {
                 writeInFile(logFile)
             }
-        } else {
-            writeInFile(logFile)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            utility.showSnackBar(e.message ?: GENERIC_ERROR_MESSAGE);
         }
     }
 
     private fun writeInFile(file: File) {
-        val writer = FileWriter(file, true)
-        writer.append(utility.getCurrentTime()).append(" ").append(binding.edtFileContent.text).append("\n")
-        writer.flush()
-        writer.close()
+        try {
+            val writer = FileWriter(file, true)
+            writer.append(utility.getCurrentTime()).append(" ").append(binding.edtFileContent.text)
+                .append("\n")
+            writer.flush()
+            writer.close()
+        } catch (e: Exception) {
+            utility.showSnackBar(e.message ?: GENERIC_ERROR_MESSAGE)
+        }
     }
 }

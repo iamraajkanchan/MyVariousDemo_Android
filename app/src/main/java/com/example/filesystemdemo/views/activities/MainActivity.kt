@@ -49,6 +49,8 @@ class MainActivity : AppCompatActivity() {
         binding.btnJobSchedulerDemo.setOnClickListener { goToJobSchedulerDemo() }
         binding.btnAlarmManagerDemo.setOnClickListener { goToAlarmManagerDemo() }
         binding.btnBroadcastReceiverDemo.setOnClickListener { goToBroadcastReceiverDemo() }
+        binding.btnTimerDemo.setOnClickListener { goToTimerDemo() }
+        binding.btnPersistTimerDemo.setOnClickListener { goToPersistTimerDemo() }
     }
 
     private fun storagePermissionGranted() = STORAGE_PERMISSIONS.all {
@@ -120,6 +122,20 @@ class MainActivity : AppCompatActivity() {
 
     private fun goToBroadcastReceiverDemo() {
         Intent(this@MainActivity, BroadcastReceiverDemo::class.java).apply {
+            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            startActivity(this)
+        }
+    }
+
+    private fun goToTimerDemo() {
+        Intent(this@MainActivity, TimerDemo::class.java).apply {
+            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            startActivity(this)
+        }
+    }
+
+    private fun goToPersistTimerDemo() {
+        Intent(this@MainActivity, PersistTimerDemo::class.java).apply {
             addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             startActivity(this)
         }

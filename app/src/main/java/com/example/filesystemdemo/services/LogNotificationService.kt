@@ -13,7 +13,7 @@ import com.example.filesystemdemo.utilities.Utility
 
 private const val LOG_NOTIFICATION_SERVICE_ID = 3
 
-class LogNotificationService : IntentService("LogNotificationService") {
+class LogNotificationService : IntentService(LogNotificationService::class.simpleName) {
 
     private val utility: Utility by lazy { Utility(applicationContext) }
 
@@ -50,5 +50,6 @@ class LogNotificationService : IntentService("LogNotificationService") {
             builder.build()
         }
         notificationManager.notify(LOG_NOTIFICATION_SERVICE_ID, notification)
+        startForeground(LOG_NOTIFICATION_SERVICE_ID, notification)
     }
 }

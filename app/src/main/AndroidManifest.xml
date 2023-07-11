@@ -3,15 +3,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.filesystemdemo">
 
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         android:maxSdkVersion="29"
-        tools:ignore="ScopedStorage" />
+        android:requestLegacyExternalStorage="true" />
+    <uses-permission android:name="android.permission.ACCESS_MEDIA_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
 
     <application
         android:allowBackup="true"
@@ -24,6 +28,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FileSystemDemo"
         tools:targetApi="31">
+        <activity
+            android:name=".views.activities.PersistTimerDemo"
+            android:exported="false" />
+        <activity
+            android:name=".views.activities.TimerDemo"
+            android:exported="true"/>
         <activity
             android:name=".views.activities.BroadcastReceiverDemo"
             android:exported="false" />
@@ -68,7 +78,6 @@
                 <action android:name="com.example.filesystemdemo.log_notification_receiver" />
             </intent-filter>
         </receiver>
-
         <receiver
             android:name=".broadcasts.LogNotificationServiceReceiver"
             android:exported="true">
@@ -76,7 +85,15 @@
                 <action android:name="com.example.filesystemdemo.log_notification_service_broadcast_action" />
             </intent-filter>
         </receiver>
+        <receiver
+            android:name=".broadcasts.LocationNotificationReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.example.filesystemdemo.location_notification_broadcast_action" />
+            </intent-filter>
+        </receiver>
 
+        <service android:name=".services.TimerService" />
         <service
             android:name=".jobs.BackgroundPrintLogJob"
             android:permission="android.permission.BIND_JOB_SERVICE" />
@@ -84,6 +101,10 @@
             android:name=".services.LogNotificationService"
             android:icon="@drawable/ic_launcher_foreground"
             android:label="Log Notification Service" />
+        <service
+            android:name=".services.LocationNotificationService"
+            android:icon="@drawable/ic_launcher_foreground"
+            android:label="Location Notification Service" />
     </application>
 
 </manifest>
