@@ -29,6 +29,9 @@
         android:theme="@style/Theme.FileSystemDemo"
         tools:targetApi="31">
         <activity
+            android:name=".views.activities.MultiplicationUsingAsyncTaskActivity"
+            android:exported="false" />
+        <activity
             android:name=".views.activities.MultiplicationUsingThreadActivity"
             android:exported="false" />
         <activity

@@ -18,13 +18,30 @@ class BasicThreadDemoActivity : AppCompatActivity() {
 
     private fun configureButtons() {
         binding.btnMultiplicationUsingThread.setOnClickListener {
-            Intent(
-                this@BasicThreadDemoActivity,
-                MultiplicationUsingThreadActivity::class.java
-            ).apply {
-                flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                startActivity(this)
-            }
+            goToMultiplicationUsingThreadActivity()
+        }
+        binding.btnMultiplicationUsingAsyncTask.setOnClickListener {
+            goToMultiplicationUsingAsyncTaskActivity()
+        }
+    }
+
+    private fun goToMultiplicationUsingThreadActivity() {
+        Intent(
+            this@BasicThreadDemoActivity,
+            MultiplicationUsingThreadActivity::class.java
+        ).apply {
+            flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+            startActivity(this)
+        }
+    }
+
+    private fun goToMultiplicationUsingAsyncTaskActivity() {
+        Intent(
+            this@BasicThreadDemoActivity,
+            MultiplicationUsingAsyncTaskActivity::class.java
+        ).apply {
+            flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+            startActivity(this)
         }
     }
 }
