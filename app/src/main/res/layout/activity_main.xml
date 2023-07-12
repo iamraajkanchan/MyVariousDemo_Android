@@ -115,6 +115,16 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/btnTimerDemo" />
 
+            <Button
+                android:id="@+id/btnConcurrencyDemo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/top_margin_to_parent"
+                android:text="Concurrency Demo"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btnTimerDemo" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
