@@ -1,6 +1,8 @@
 package com.example.filesystemdemo.views.activities
 
 import android.Manifest
+import android.content.ActivityNotFoundException
+import android.content.ComponentName
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
@@ -52,6 +54,7 @@ class MainActivity : AppCompatActivity() {
         binding.btnTimerDemo.setOnClickListener { goToTimerDemo() }
         binding.btnPersistTimerDemo.setOnClickListener { goToPersistTimerDemo() }
         binding.btnConcurrencyDemo.setOnClickListener { goToConcurrencyDemo() }
+        binding.btnConnectMPower.setOnClickListener { goToMPowerApplication() }
     }
 
     private fun storagePermissionGranted() = STORAGE_PERMISSIONS.all {
@@ -146,6 +149,24 @@ class MainActivity : AppCompatActivity() {
         Intent(this@MainActivity, ConcurrencyDemoActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
             startActivity(this)
+        }
+    }
+
+    private fun goToMPowerApplication() {
+        // Use the below code to connect the launcher activity.
+        /*
+        val mPowerIntent = packageManager.getLaunchIntentForPackage("com.mobicule.msales.info")
+        */
+        try {
+            Intent().apply {
+                component = ComponentName(
+                    "com.mobicule.msales.info",
+                    "com.mobicule.msales.info.kotlin.AchieversClub.View.AchieversClubCircleListActivity"
+                )
+                startActivity(this)
+            }
+        } catch (e: ActivityNotFoundException) {
+            e.printStackTrace(System.out)
         }
     }
 
