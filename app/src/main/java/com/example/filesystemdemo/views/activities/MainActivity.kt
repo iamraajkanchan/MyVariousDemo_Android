@@ -8,35 +8,101 @@ import android.content.pm.PackageManager
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.filesystemdemo.databinding.ActivityMainBinding
+import com.example.filesystemdemo.utilities.Utility
 import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private val utility = Utility(this@MainActivity)
+    private val locationPermissionContractForNetworkDemo = registerForActivityResult(
+        ActivityResultContracts.RequestMultiplePermissions(), activityResultRegistry
+    ) { result ->
+        for (permission in LOCATION_PERMISSIONS) {
+            if (result[permission] == true) {
+                goToNetworkInfo()
+            } else {
+                if (ActivityCompat.shouldShowRequestPermissionRationale(
+                        this@MainActivity, permission
+                    )
+                ) {
+                    Snackbar.make(
+                        binding.mainCoordinator,
+                        "Application Need Location Permission",
+                        Snackbar.LENGTH_LONG
+                    ).show()
+                }
+            }
+        }
+    }
+
+    private val storagePermissionContractForFileSystemDemo = registerForActivityResult(
+        ActivityResultContracts.RequestMultiplePermissions()
+    ) { result ->
+        for (permission in STORAGE_PERMISSIONS) {
+            if (result[permission] == true) {
+                goToFileSystem()
+            } else {
+                if (ActivityCompat.shouldShowRequestPermissionRationale(
+                        this@MainActivity, permission
+                    )
+                ) {
+                    Snackbar.make(
+                        binding.mainCoordinator,
+                        "Application Need Storage Permission",
+                        Snackbar.LENGTH_LONG
+                    ).show()
+                }
+            }
+        }
+    }
+
+    private val storagePermissionContractForWorkManagerDemo = registerForActivityResult(
+        ActivityResultContracts.RequestMultiplePermissions()
+    ) { result ->
+        for (permission in STORAGE_PERMISSIONS) {
+            if (result[permission] == true) {
+                goToWorkMangerDemo()
+            } else {
+                if (ActivityCompat.shouldShowRequestPermissionRationale(
+                        this@MainActivity, permission
+                    )
+                ) {
+                    Snackbar.make(
+                        binding.mainCoordinator,
+                        "Application Need Storage Permission",
+                        Snackbar.LENGTH_LONG
+                    ).show()
+                }
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        initViews()
     }
 
-    override fun onStart() {
-        super.onStart()
+    private fun initViews() {
         binding.btnFileSystem.setOnClickListener {
             if (storagePermissionGranted()) {
                 goToFileSystem()
             } else {
-                requestPermission(STORAGE_PERMISSIONS, STORAGE_PERMISSIONS_CODE)
+                storagePermissionContractForFileSystemDemo.launch(STORAGE_PERMISSIONS)
             }
         }
         binding.btnNetworkInfo.setOnClickListener {
             if (locationPermissionGranted()) {
                 goToNetworkInfo()
             } else {
-                requestPermission(LOCATION_PERMISSIONS, LOCATION_PERMISSIONS_CODE)
+                locationPermissionContractForNetworkDemo.launch(LOCATION_PERMISSIONS)
             }
         }
         binding.btnViewPagerDemoActivity.setOnClickListener { goToViewPagerDemo() }
@@ -45,7 +111,7 @@ class MainActivity : AppCompatActivity() {
             if (storagePermissionGranted()) {
                 goToWorkMangerDemo()
             } else {
-                requestPermission(STORAGE_PERMISSIONS, WORKER_PERMISSIONS_CODE)
+                storagePermissionContractForWorkManagerDemo.launch(STORAGE_PERMISSIONS)
             }
         }
         binding.btnJobSchedulerDemo.setOnClickListener { goToJobSchedulerDemo() }
@@ -57,100 +123,41 @@ class MainActivity : AppCompatActivity() {
         binding.btnConnectMPower.setOnClickListener { goToMPowerApplication() }
     }
 
-    private fun storagePermissionGranted() = STORAGE_PERMISSIONS.all {
-        ContextCompat.checkSelfPermission(
-            this@MainActivity, it
-        ) == PackageManager.PERMISSION_GRANTED
-    }
-
     private fun locationPermissionGranted() = LOCATION_PERMISSIONS.all {
         ContextCompat.checkSelfPermission(
             this@MainActivity, it
         ) == PackageManager.PERMISSION_GRANTED
     }
 
-    private fun requestPermission(permissions: Array<out String>, permissionCode: Int) {
-        ActivityCompat.requestPermissions(
-            this@MainActivity, permissions, permissionCode
-        )
+    private fun storagePermissionGranted() = STORAGE_PERMISSIONS.all {
+        ContextCompat.checkSelfPermission(
+            this@MainActivity,
+            it
+        ) == PackageManager.PERMISSION_GRANTED
     }
 
-    private fun goToFileSystem() {
-        Intent(this@MainActivity, FileSystemActivity::class.java).apply {
-            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-            startActivity(this)
-        }
-    }
+    private fun goToFileSystem() = utility.goTo(FileSystemActivity::class.java)
 
-    private fun goToNetworkInfo() {
-        Intent(this@MainActivity, NetworkInfoActivity::class.java).apply {
-            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-            startActivity(this)
-        }
-    }
+    private fun goToNetworkInfo() = utility.goTo(NetworkInfoActivity::class.java)
 
-    private fun goToViewPagerDemo() {
-        Intent(this@MainActivity, ViewPagerDemoActivity::class.java).apply {
-            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-            startActivity(this)
-        }
-    }
+    private fun goToViewPagerDemo() = utility.goTo(ViewPagerDemoActivity::class.java)
 
-    private fun goToViewPagerDemoWithFragment() {
-        Intent(this@MainActivity, ViewPagerDemoActivityWithFragment::class.java).apply {
-            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-            startActivity(this)
-        }
-    }
+    private fun goToViewPagerDemoWithFragment() =
+        utility.goTo(ViewPagerDemoActivityWithFragment::class.java)
 
-    private fun goToWorkMangerDemo() {
-        Intent(this@MainActivity, WorkManagerDemo::class.java).apply {
-            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-            startActivity(this)
-        }
-    }
+    private fun goToWorkMangerDemo() = utility.goTo(WorkManagerDemo::class.java)
 
-    private fun goToJobSchedulerDemo() {
-        Intent(this@MainActivity, JobSchedulerDemo::class.java).apply {
-            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-            startActivity(this)
-        }
-    }
+    private fun goToJobSchedulerDemo() = utility.goTo(JobSchedulerDemo::class.java)
 
-    private fun goToAlarmManagerDemo() {
-        Intent(this@MainActivity, AlarmManagerDemo::class.java).apply {
-            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-            startActivity(this)
-        }
-    }
+    private fun goToAlarmManagerDemo() = utility.goTo(AlarmManagerDemo::class.java)
 
-    private fun goToBroadcastReceiverDemo() {
-        Intent(this@MainActivity, BroadcastReceiverDemo::class.java).apply {
-            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-            startActivity(this)
-        }
-    }
+    private fun goToBroadcastReceiverDemo() = utility.goTo(BroadcastReceiverDemo::class.java)
 
-    private fun goToTimerDemo() {
-        Intent(this@MainActivity, TimerDemo::class.java).apply {
-            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-            startActivity(this)
-        }
-    }
+    private fun goToTimerDemo() = utility.goTo(TimerDemo::class.java)
 
-    private fun goToPersistTimerDemo() {
-        Intent(this@MainActivity, PersistTimerDemo::class.java).apply {
-            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-            startActivity(this)
-        }
-    }
+    private fun goToPersistTimerDemo() = utility.goTo(PersistTimerDemo::class.java)
 
-    private fun goToConcurrencyDemo() {
-        Intent(this@MainActivity, ConcurrencyDemoActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-            startActivity(this)
-        }
-    }
+    private fun goToConcurrencyDemo() = utility.goTo(ConcurrencyDemoActivity::class.java)
 
     private fun goToMPowerApplication() {
         // Use the below code to connect the launcher activity.
@@ -170,110 +177,34 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == STORAGE_PERMISSIONS_CODE) {
-            STORAGE_PERMISSIONS.forEach { s ->
-                for (permission in permissions) {
-                    if (permission == s) {
-                        for (grantResult in grantResults) {
-                            if (grantResult == PackageManager.PERMISSION_GRANTED) {
-                                goToFileSystem()
-                            } else {
-                                if (ActivityCompat.shouldShowRequestPermissionRationale(
-                                        this@MainActivity, s
-                                    )
-                                ) {
-                                    Snackbar.make(
-                                        binding.mainCoordinator,
-                                        "Application Need Storage Permission",
-                                        Snackbar.LENGTH_LONG
-                                    ).show()
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        if (requestCode == LOCATION_PERMISSIONS_CODE) {
-            LOCATION_PERMISSIONS.forEach { s ->
-                for (permission in permissions) {
-                    if (permission == s) {
-                        for (grantResult in grantResults) {
-                            if (grantResult == PackageManager.PERMISSION_GRANTED) {
-                                goToNetworkInfo()
-                            } else {
-                                if (ActivityCompat.shouldShowRequestPermissionRationale(
-                                        this@MainActivity, s
-                                    )
-                                ) {
-                                    Snackbar.make(
-                                        binding.mainCoordinator,
-                                        "Application Need Location Permission",
-                                        Snackbar.LENGTH_LONG
-                                    ).show()
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        if (requestCode == WORKER_PERMISSIONS_CODE) {
-            STORAGE_PERMISSIONS.forEach { s ->
-                for (permission in permissions) {
-                    if (permission == s) {
-                        for (grantResult in grantResults) {
-                            if (grantResult == PackageManager.PERMISSION_GRANTED) {
-                                goToWorkMangerDemo()
-                            } else {
-                                if (ActivityCompat.shouldShowRequestPermissionRationale(
-                                        this@MainActivity, s
-                                    )
-                                ) {
-                                    Snackbar.make(
-                                        binding.mainCoordinator,
-                                        "Application Need Storage Permission",
-                                        Snackbar.LENGTH_LONG
-                                    ).show()
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-
     companion object {
-        const val LOCATION_PERMISSIONS_CODE = 10
         val LOCATION_PERMISSIONS = mutableListOf(
             Manifest.permission.ACCESS_COARSE_LOCATION,
             Manifest.permission.ACCESS_FINE_LOCATION
         ).apply {
             if (Build.VERSION.SDK_INT > Build.VERSION_CODES.Q) {
-                Manifest.permission.ACCESS_BACKGROUND_LOCATION
+                add(Manifest.permission.ACCESS_BACKGROUND_LOCATION)
             }
         }.toTypedArray()
 
-        const val STORAGE_PERMISSIONS_CODE = 11
-        const val WORKER_PERMISSIONS_CODE = 12
-        val STORAGE_PERMISSIONS = mutableListOf(
-            Manifest.permission.READ_EXTERNAL_STORAGE
-        ).apply {
-            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P) {
-                add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        val STORAGE_PERMISSIONS =
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+                mutableListOf(Manifest.permission.READ_EXTERNAL_STORAGE).apply {
+                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) {
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    }
+                }.toTypedArray()
+            } else {
+                arrayOf(
+                    Manifest.permission.READ_MEDIA_VIDEO,
+                    Manifest.permission.READ_MEDIA_IMAGES,
+                    Manifest.permission.READ_MEDIA_AUDIO
+                )
             }
-        }.toTypedArray()
 
-        const val CAMERA_PERMISSIONS_CODE = 12
-        val CAMERA_PERMISSIONS = mutableListOf(
+
+        val CAMERA_PERMISSIONS = arrayOf(
             Manifest.permission.CAMERA
-        ).toTypedArray()
+        )
     }
 }

@@ -2,6 +2,7 @@ package com.example.filesystemdemo.utilities
 
 import android.app.ActivityManager
 import android.content.Context
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.widget.Toast
@@ -40,7 +41,12 @@ class Utility(private val context: Context) {
         drawable.draw(canvas)
         return bitmap
     }
-
+    fun <T> goTo(clazz: Class<T>) {
+        Intent(context, clazz).apply {
+            flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+            context.startActivity(this)
+        }
+    }
     fun <T> isServiceRunning(kClass: Class<T>): Boolean {
         val activityManager = context.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
         for (service in activityManager.getRunningServices(Integer.MAX_VALUE)) {
