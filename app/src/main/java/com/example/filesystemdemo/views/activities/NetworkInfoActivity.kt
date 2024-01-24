@@ -12,12 +12,16 @@ import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.filesystemdemo.databinding.ActivityNetworkInfoBinding
 import com.example.filesystemdemo.views.adapters.NetworkInfoAdapter
+import dagger.hilt.android.AndroidEntryPoint
 import java.lang.StringBuilder
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class NetworkInfoActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityNetworkInfoBinding
-    private lateinit var locationManager: LocationManager
+    @Inject
+    lateinit var locationManager: LocationManager
     private var myLatitude: Double = 0.0
     private var myLongitude: Double = 0.0
     private val locationListener = LocationListener { location ->

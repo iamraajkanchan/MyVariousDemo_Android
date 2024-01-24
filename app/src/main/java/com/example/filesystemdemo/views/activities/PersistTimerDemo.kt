@@ -5,11 +5,14 @@ import android.os.Bundle
 import com.example.filesystemdemo.R
 import com.example.filesystemdemo.databinding.ActivityPersistTimerDemoBinding
 import com.example.filesystemdemo.utilities.DataHelper
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class PersistTimerDemo : AppCompatActivity() {
     private lateinit var binding: ActivityPersistTimerDemoBinding
-    lateinit var dataHelper: DataHelper
+    @Inject lateinit var dataHelper: DataHelper
     private val timer = Timer()
 
     override fun onCreate(savedInstanceState: Bundle?) {

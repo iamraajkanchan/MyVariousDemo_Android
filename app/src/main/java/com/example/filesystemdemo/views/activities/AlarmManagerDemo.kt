@@ -26,7 +26,6 @@ class AlarmManagerDemo : AppCompatActivity() {
         binding = ActivityAlarmManagerDemoBinding.inflate(layoutInflater)
         setContentView(binding.root)
         utility = Utility(this@AlarmManagerDemo)
-
     }
 
     override fun onStart() {
@@ -48,8 +47,8 @@ class AlarmManagerDemo : AppCompatActivity() {
             this@AlarmManagerDemo,
             ALARM_CODE,
             broadcastIntent,
-            PendingIntent.FLAG_UPDATE_CURRENT
-        );
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
         val alarmManager: AlarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
         alarmManager.setRepeating(
             AlarmManager.RTC_WAKEUP,
@@ -70,7 +69,7 @@ class AlarmManagerDemo : AppCompatActivity() {
             this@AlarmManagerDemo,
             ALARM_CODE,
             broadcastIntent,
-            PendingIntent.FLAG_UPDATE_CURRENT
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
         val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, timeTriggers, intervals, operation)
@@ -88,7 +87,7 @@ class AlarmManagerDemo : AppCompatActivity() {
             this@AlarmManagerDemo,
             ALARM_CODE,
             broadcastIntent,
-            PendingIntent.FLAG_UPDATE_CURRENT
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
         val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, timeTriggers, intervals, operation)

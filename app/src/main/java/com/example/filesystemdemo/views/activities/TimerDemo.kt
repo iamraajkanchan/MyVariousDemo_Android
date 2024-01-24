@@ -43,7 +43,7 @@ class TimerDemo : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityTimerDemoBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        // configureTimer()
+        configureTimer()
         configureCountDownTimer()
         startTimerService()
     }
