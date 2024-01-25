@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private val utility = Utility(this@MainActivity)
-    private val locationPermissionContractForNetworkDemo = registerForActivityResult(
+    private val locationPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions(), activityResultRegistry
     ) { result ->
         for (permission in LOCATION_PERMISSIONS) {
@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private val storagePermissionContractForFileSystemDemo = registerForActivityResult(
+    private val storagePermissionToFileSystemLauncher = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
     ) { result ->
         for (permission in STORAGE_PERMISSIONS) {
@@ -62,7 +62,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private val storagePermissionContractForWorkManagerDemo = registerForActivityResult(
+    private val storagePermissionToWorkManagerLauncher = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
     ) { result ->
         for (permission in STORAGE_PERMISSIONS) {
@@ -104,14 +104,14 @@ class MainActivity : AppCompatActivity() {
             if (storagePermissionGranted()) {
                 goToFileSystem()
             } else {
-                storagePermissionContractForFileSystemDemo.launch(STORAGE_PERMISSIONS)
+                storagePermissionToFileSystemLauncher.launch(STORAGE_PERMISSIONS)
             }
         }
         binding.btnNetworkInfo.setOnClickListener {
             if (locationPermissionGranted()) {
                 goToNetworkInfo()
             } else {
-                locationPermissionContractForNetworkDemo.launch(LOCATION_PERMISSIONS)
+                locationPermissionLauncher.launch(LOCATION_PERMISSIONS)
             }
         }
         binding.btnViewPagerDemoActivity.setOnClickListener { goToViewPagerDemo() }
@@ -120,7 +120,7 @@ class MainActivity : AppCompatActivity() {
             if (storagePermissionGranted()) {
                 goToWorkMangerDemo()
             } else {
-                storagePermissionContractForWorkManagerDemo.launch(STORAGE_PERMISSIONS)
+                storagePermissionToWorkManagerLauncher.launch(STORAGE_PERMISSIONS)
             }
         }
         binding.btnJobSchedulerDemo.setOnClickListener { goToJobSchedulerDemo() }
@@ -130,6 +130,7 @@ class MainActivity : AppCompatActivity() {
         binding.btnPersistTimerDemo.setOnClickListener { goToPersistTimerDemo() }
         binding.btnConcurrencyDemo.setOnClickListener { goToConcurrencyDemo() }
         binding.btnConnectMPower.setOnClickListener { goToMPowerApplication() }
+        binding.btnScanBarcode.setOnClickListener { goToScanBarcodeDemo() }
     }
 
     private fun locationPermissionGranted() = LOCATION_PERMISSIONS.all {
@@ -167,6 +168,8 @@ class MainActivity : AppCompatActivity() {
     private fun goToPersistTimerDemo() = utility.goTo(PersistTimerDemo::class.java)
 
     private fun goToConcurrencyDemo() = utility.goTo(ConcurrencyDemoActivity::class.java)
+
+    private fun goToScanBarcodeDemo() = utility.goTo(ScanBarcodeDemo::class.java)
 
     private fun goToMPowerApplication() {
         // Use the below code to connect the launcher activity.
