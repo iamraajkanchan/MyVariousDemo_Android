@@ -83,6 +83,15 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private val cameraPermissionContract = registerForActivityResult(
+        ActivityResultContracts.RequestPermission(),
+        activityResultRegistry
+    ) { isGranted ->
+        if (isGranted) {
+
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
