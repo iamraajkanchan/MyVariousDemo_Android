@@ -1,14 +1,14 @@
 package com.example.filesystemdemo.views.activities
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.filesystemdemo.databinding.ActivityConcurrencyDemoBinding
+import com.example.filesystemdemo.utilities.Utility
 
 class ConcurrencyDemoActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityConcurrencyDemoBinding
-
+    private val utility = Utility(this@ConcurrencyDemoActivity)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityConcurrencyDemoBinding.inflate(layoutInflater)
@@ -17,11 +17,6 @@ class ConcurrencyDemoActivity : AppCompatActivity() {
     }
 
     private fun configureButtons() {
-        binding.btnBasicThreadDemo.setOnClickListener {
-            Intent(this@ConcurrencyDemoActivity, BasicThreadDemoActivity::class.java).apply {
-                flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                startActivity(this)
-            }
-        }
+        binding.btnBasicThreadDemo.setOnClickListener { utility.goTo(BasicThreadDemoActivity::class.java) }
     }
 }

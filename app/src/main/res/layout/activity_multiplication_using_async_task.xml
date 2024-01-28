@@ -24,6 +24,21 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/lpiCalculationProgress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="40dp"
+            android:indeterminate="false"
+            android:max="100"
+            android:progress="30"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:trackCornerRadius="10dp"
+            app:trackThickness="20dp" />
+
         <TextView
             android:id="@+id/tvValue"
             android:layout_width="0dp"

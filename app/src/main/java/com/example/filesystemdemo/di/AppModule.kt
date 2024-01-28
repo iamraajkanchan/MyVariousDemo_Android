@@ -1,13 +1,14 @@
 package com.example.filesystemdemo.di
 
 import android.content.Context
+import android.graphics.Paint
 import android.location.LocationManager
 import com.example.filesystemdemo.utilities.DataHelper
-import com.example.filesystemdemo.utilities.Utility
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.android.scopes.ViewScoped
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
@@ -22,4 +23,8 @@ object AppModule {
     @Singleton
     fun providesLocationManager(@ApplicationContext context: Context) =
         context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+
+    @Provides
+    @ViewScoped
+    fun providePaint() = Paint()
 }

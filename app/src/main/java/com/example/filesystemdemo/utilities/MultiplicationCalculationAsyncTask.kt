@@ -16,6 +16,10 @@ class MultiplicationCalculationAsyncTask(
         return "$number * $multiplier = $result"
     }
 
+    override fun onProgressUpdate(vararg values: Void?) {
+        super.onProgressUpdate(*values)
+    }
+
     override fun onPostExecute(result: String) {
         println("Result : $result")
         if (binding is ActivityMultiplicationUsingAsyncTaskBinding) {

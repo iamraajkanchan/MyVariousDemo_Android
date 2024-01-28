@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-feature android:name="android.hardware.camera" />
+
+    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission
@@ -35,10 +38,12 @@
         android:theme="@style/Theme.FileSystemDemo"
         tools:targetApi="31">
         <activity
+            android:name=".views.activities.CustomGraphActivity"
+            android:exported="false" />
+        <activity
             android:name=".views.activities.ScanBarcodeDemo"
             android:exported="false"
-            android:screenOrientation="sensorPortrait"
-            />
+            android:screenOrientation="sensorPortrait" />
         <activity
             android:name=".views.activities.MultiplicationUsingAsyncTaskActivity"
             android:exported="false" />

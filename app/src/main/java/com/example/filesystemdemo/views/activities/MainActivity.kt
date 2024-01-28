@@ -8,7 +8,6 @@ import android.content.pm.PackageManager
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -27,15 +26,11 @@ class MainActivity : AppCompatActivity() {
             if (result[permission] == true) {
                 goToNetworkInfo()
             } else {
-                if (ActivityCompat.shouldShowRequestPermissionRationale(
-                        this@MainActivity, permission
-                    )
-                ) {
-                    Snackbar.make(
-                        binding.mainCoordinator,
-                        "Application Need Location Permission",
-                        Snackbar.LENGTH_LONG
-                    ).show()
+                if (showRationaleMessage(permission)) {
+                    showSnackBar("Application Need Location Permission")
+                } else {
+                    showSnackBar("Sorry, need location permission to continue")
+                    return@registerForActivityResult
                 }
             }
         }
@@ -48,15 +43,11 @@ class MainActivity : AppCompatActivity() {
             if (result[permission] == true) {
                 goToFileSystem()
             } else {
-                if (ActivityCompat.shouldShowRequestPermissionRationale(
-                        this@MainActivity, permission
-                    )
-                ) {
-                    Snackbar.make(
-                        binding.mainCoordinator,
-                        "Application Need Storage Permission",
-                        Snackbar.LENGTH_LONG
-                    ).show()
+                if (showRationaleMessage(permission)) {
+                    showSnackBar("Application Need Storage Permission")
+                } else {
+                    showSnackBar("Sorry, need storage permission to continue")
+                    return@registerForActivityResult
                 }
             }
         }
@@ -69,15 +60,11 @@ class MainActivity : AppCompatActivity() {
             if (result[permission] == true) {
                 goToWorkMangerDemo()
             } else {
-                if (ActivityCompat.shouldShowRequestPermissionRationale(
-                        this@MainActivity, permission
-                    )
-                ) {
-                    Snackbar.make(
-                        binding.mainCoordinator,
-                        "Application Need Storage Permission",
-                        Snackbar.LENGTH_LONG
-                    ).show()
+                if (showRationaleMessage(permission)) {
+                    showSnackBar("Application Need Storage Permission")
+                } else {
+                    showSnackBar("Sorry, need storage permission to continue")
+                    return@registerForActivityResult
                 }
             }
         }
@@ -88,7 +75,14 @@ class MainActivity : AppCompatActivity() {
         activityResultRegistry
     ) { isGranted ->
         if (isGranted) {
-
+            goToScanBarcodeDemo()
+        } else {
+            if (showRationaleMessage(CAMERA_PERMISSIONS[0])) {
+                showSnackBar("Application Need Camera Permission")
+            } else {
+                showSnackBar("Sorry, we need camera permission to continue")
+                return@registerForActivityResult
+            }
         }
     }
 
@@ -130,7 +124,14 @@ class MainActivity : AppCompatActivity() {
         binding.btnPersistTimerDemo.setOnClickListener { goToPersistTimerDemo() }
         binding.btnConcurrencyDemo.setOnClickListener { goToConcurrencyDemo() }
         binding.btnConnectMPower.setOnClickListener { goToMPowerApplication() }
-        binding.btnScanBarcode.setOnClickListener { goToScanBarcodeDemo() }
+        binding.btnScanBarcode.setOnClickListener {
+            if (cameraPermissionGranted()) {
+                goToScanBarcodeDemo()
+            } else {
+                cameraPermissionContract.launch(CAMERA_PERMISSIONS[0])
+            }
+        }
+        binding.btnCustomGraph.setOnClickListener { utility.goTo(CustomGraphActivity::class.java) }
     }
 
     private fun locationPermissionGranted() = LOCATION_PERMISSIONS.all {
@@ -141,8 +142,13 @@ class MainActivity : AppCompatActivity() {
 
     private fun storagePermissionGranted() = STORAGE_PERMISSIONS.all {
         ContextCompat.checkSelfPermission(
-            this@MainActivity,
-            it
+            this@MainActivity, it
+        ) == PackageManager.PERMISSION_GRANTED
+    }
+
+    private fun cameraPermissionGranted() = CAMERA_PERMISSIONS.all {
+        ContextCompat.checkSelfPermission(
+            this@MainActivity, it
         ) == PackageManager.PERMISSION_GRANTED
     }
 
@@ -187,6 +193,14 @@ class MainActivity : AppCompatActivity() {
         } catch (e: ActivityNotFoundException) {
             e.printStackTrace(System.out)
         }
+    }
+
+    private fun showRationaleMessage(permission: String): Boolean {
+        return ActivityCompat.shouldShowRequestPermissionRationale(this@MainActivity, permission)
+    }
+
+    private fun showSnackBar(message: String) {
+        Snackbar.make(binding.mainCoordinator, message, Snackbar.LENGTH_LONG).show()
     }
 
     companion object {
