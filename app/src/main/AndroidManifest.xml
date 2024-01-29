@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
     <uses-feature android:name="android.hardware.camera" />
 
     <uses-permission android:name="android.permission.CAMERA" />
@@ -37,6 +38,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FileSystemDemo"
         tools:targetApi="31">
+        <activity
+            android:name=".views.activities.WebsocketDemoActivity"
+            android:exported="false" />
         <activity
             android:name=".views.activities.CustomGraphActivity"
             android:exported="false" />

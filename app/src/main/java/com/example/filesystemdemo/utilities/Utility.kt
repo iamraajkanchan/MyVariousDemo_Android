@@ -12,8 +12,9 @@ import com.google.android.material.snackbar.Snackbar
 import java.text.SimpleDateFormat
 import java.util.*
 
-class Utility(private val context: Context) {
+const val SOCKET_URL = "wss://s11684.blr1.piesocket.com/v3/1?api_key=mraIHJnDRY0pSU3EUEVp35zyndI9s7lZZjHIA5zY&notify_self=1"
 
+class Utility(private val context: Context) {
     private var view: CoordinatorLayout? = null
 
     constructor(context: Context, view: CoordinatorLayout) : this(context) {

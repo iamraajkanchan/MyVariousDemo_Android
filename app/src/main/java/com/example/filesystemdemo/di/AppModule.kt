@@ -10,6 +10,8 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.android.scopes.ViewScoped
 import dagger.hilt.components.SingletonComponent
+import okhttp3.OkHttpClient
+import okhttp3.WebSocket
 import javax.inject.Singleton
 
 @Module
@@ -27,4 +29,9 @@ object AppModule {
     @Provides
     @ViewScoped
     fun providePaint() = Paint()
+
+    @Provides
+    @Singleton
+    fun provideOkHttpClient() = OkHttpClient()
+
 }
