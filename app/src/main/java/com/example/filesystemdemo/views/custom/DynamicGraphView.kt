@@ -25,7 +25,7 @@ class DynamicGraphView(
         paint.strokeWidth = 5f
     }
 
-    override fun onDraw(canvas: Canvas?) {
+    override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         // Calculate graph dimensions and spacing
         val width = width - paddingLeft - paddingRight

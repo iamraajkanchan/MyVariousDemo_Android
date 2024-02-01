@@ -133,6 +133,7 @@ class MainActivity : AppCompatActivity() {
         }
         binding.btnCustomGraph.setOnClickListener { utility.goTo(CustomGraphActivity::class.java) }
         binding.btnWebsocketDemo.setOnClickListener { utility.goTo(WebsocketDemoActivity::class.java) }
+        binding.btnSQLiteDemo.setOnClickListener { utility.goTo(SQLiteDemoActivity::class.java) }
     }
 
     private fun locationPermissionGranted() = LOCATION_PERMISSIONS.all {
