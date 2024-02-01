@@ -4,11 +4,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
-import com.example.filesystemdemo.R
 import com.example.filesystemdemo.databinding.ActivityWebsocketDemoBinding
 import com.example.filesystemdemo.services.ChatListener
 import com.example.filesystemdemo.utilities.SOCKET_URL
-import com.example.filesystemdemo.utilities.Utility
 import com.example.filesystemdemo.viewModels.WebsocketDemoViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import okhttp3.OkHttpClient
