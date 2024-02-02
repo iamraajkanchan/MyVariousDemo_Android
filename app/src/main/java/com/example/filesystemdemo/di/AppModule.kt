@@ -16,10 +16,11 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
-import dagger.hilt.android.scopes.ViewScoped
+import dagger.hilt.android.scopes.ActivityScoped
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
+import javax.inject.Qualifier
 import javax.inject.Singleton
 
 @Module
@@ -35,7 +36,7 @@ object AppModule {
         context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
     @Provides
-    @ViewScoped
+    @ActivityScoped
     fun providePaint() = Paint()
 
     @Provides
@@ -48,17 +49,19 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideAppDatabase(@ApplicationContext context: Context) = AppSQLDatabase(
+    fun provideAppDatabase(@ApplicationContext context: Context): AppSQLDatabase = AppSQLDatabase(
         AlbumTable.QUERY_STRING, context, DATABASE_NAME, DATABASE_VERSION
     )
 
     @Provides
     @Singleton
-    fun provideAppDatabaseImpl(database: AppSQLDatabase) = AppSQLDatabaseImpl(database)
+    fun provideAppDatabaseImpl(database: AppSQLDatabase): AppSQLDatabaseImpl =
+        AppSQLDatabaseImpl(database)
 
     @Provides
     @Singleton
-    fun provideRetrofitInterceptor() = RetrofitInterceptor()
+    fun provideRetrofitInterceptor(@ApplicationContext context: Context): RetrofitInterceptor =
+        RetrofitInterceptor(context)
 
     @Provides
     @Singleton
@@ -67,11 +70,13 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideApiService(retrofit: Retrofit): ApiService = retrofit.create(ApiService::class.java)
+    fun provideApiServiceWithoutToken(retrofit: Retrofit): ApiService =
+        retrofit.create(ApiService::class.java)
 
     @Provides
     @Singleton
-    fun provideAppRepository(apiService: ApiService) : AppRepository = AppRepository(apiService)
+    fun provideAppRepositoryWithoutToken(apiService: ApiService): AppRepository =
+        AppRepository(apiService)
 
 
     const val PREFERENCE_NAME = "AppSharedPreference"
@@ -79,15 +84,47 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideRetrofitInterceptorWithToken(@ApplicationContext context: Context): RetrofitInterceptorWithToken? {
+    fun provideRetrofitInterceptorWithToken(@ApplicationContext context: Context): RetrofitInterceptorWithToken {
         val sharedPreference = context.getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE)
         val token = sharedPreference.getString(PREFERENCE_TOKEN, "") ?: ""
         return if (token != "") {
             RetrofitInterceptorWithToken(token)
         } else {
-            null
+            throw Exception("Token Not Found")
         }
     }
 
+    fun provideRetrofitForToken(interceptorWithToken: RetrofitInterceptorWithToken) =
+        RetrofitHelper.getRetrofitInstance(interceptorWithToken)
+
+    fun provideApiServiceWithToken(@RETROFIT_WITH_TOKEN retrofit: Retrofit): ApiService =
+        retrofit.create(ApiService::class.java)
+
+    fun provideAppRepositoryWithToken(@API_WITH_TOKEN apiService: ApiService): AppRepository =
+        AppRepository(apiService)
 
 }
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class RETROFIT_WITH_TOKEN
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class RETROFIT_WITHOUT_TOKEN
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class API_WITH_TOKEN
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class API_WITHOUT_TOKEN
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class REPOSITORY_WITH_TOKEN
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class REPOSITORY_WITHOUT_TOKEN

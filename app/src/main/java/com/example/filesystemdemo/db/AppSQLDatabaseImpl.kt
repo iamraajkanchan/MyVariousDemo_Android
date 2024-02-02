@@ -20,12 +20,14 @@ class AppSQLDatabaseImpl (private val database: AppSQLDatabase) {
         val albums = mutableListOf<Album>()
         val db = database.readableDatabase
         val cursor = db.query(AlbumTable.TABLE_ALBUMS, null, null, null, null, null, null)
-        do {
-            val userId = cursor.getString(cursor.getColumnIndex(AlbumTable.COLUMN_USERID))
-            val id = cursor.getString(cursor.getColumnIndex(AlbumTable.COLUMN_ID))
-            val title = cursor.getString(cursor.getColumnIndex(AlbumTable.COLUMN_TITLE))
-            albums.add(Album(userId, id, title))
-        } while (cursor.moveToNext())
+        if (cursor.moveToFirst()) {
+            do {
+                val userId = cursor.getString(cursor.getColumnIndex(AlbumTable.COLUMN_USERID))
+                val id = cursor.getString(cursor.getColumnIndex(AlbumTable.COLUMN_ID))
+                val title = cursor.getString(cursor.getColumnIndex(AlbumTable.COLUMN_TITLE))
+                albums.add(Album(userId, id, title))
+            } while (cursor.moveToNext())
+        }
         db.close()
         return albums
     }
