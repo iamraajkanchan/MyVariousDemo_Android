@@ -46,7 +46,7 @@ class SQLiteDemoViewModel @Inject constructor(
         if (albums.isEmpty()) {
             _albumState.value = AlbumState.Failure(Exception("Server Not Found"))
         } else {
-            _albumState.value = AlbumState.Success(databaseImpl.getAlbums())
+            _albumState.value = AlbumState.Success(albums)
         }
     }
 
