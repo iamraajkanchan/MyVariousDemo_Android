@@ -42,11 +42,14 @@ class SQLiteDemoViewModel @Inject constructor(
     }
 
     fun getAlbums() {
-        val albums = databaseImpl.getAlbums()
-        if (albums.isEmpty()) {
-            _albumState.value = AlbumState.Failure(Exception("Server Not Found"))
-        } else {
-            _albumState.value = AlbumState.Success(albums)
+        viewModelScope.launch {
+            databaseImpl.getAlbums().collectLatest { albums ->
+                if (albums.isEmpty()) {
+                    _albumState.value = AlbumState.Failure(Exception("Server Not Found"))
+                } else {
+                    _albumState.value = AlbumState.Success(albums)
+                }
+            }
         }
     }
 

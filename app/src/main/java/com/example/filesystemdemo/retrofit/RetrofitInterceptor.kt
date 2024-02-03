@@ -1,18 +1,19 @@
 package com.example.filesystemdemo.retrofit
 
-import android.content.Context
-import com.example.filesystemdemo.utilities.Utility
+import com.example.filesystemdemo.utilities.NetworkManager
 import okhttp3.Interceptor
 import okhttp3.Response
+import javax.inject.Inject
 
-class RetrofitInterceptor(val context: Context) : Interceptor {
+class RetrofitInterceptor : Interceptor {
+    @Inject
+    lateinit var networkManager: NetworkManager
     override fun intercept(chain: Interceptor.Chain): Response {
-        val utility = Utility(context)
         val request = chain.request()
             .newBuilder()
             .addHeader("Content-Type", "application/json")
             .build()
-        if (!utility.isNetworkConnected()) {
+        if (networkManager.isNetworkAvailable) {
             val offLineRequest = request.newBuilder()
                 .addHeader("X-Offline", "true")
                 .build()

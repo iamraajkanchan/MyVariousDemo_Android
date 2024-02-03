@@ -12,6 +12,7 @@ import com.example.filesystemdemo.retrofit.RetrofitHelper
 import com.example.filesystemdemo.retrofit.RetrofitInterceptor
 import com.example.filesystemdemo.retrofit.RetrofitInterceptorWithToken
 import com.example.filesystemdemo.utilities.DataHelper
+import com.example.filesystemdemo.utilities.NetworkManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -60,8 +61,7 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideRetrofitInterceptor(@ApplicationContext context: Context): RetrofitInterceptor =
-        RetrofitInterceptor(context)
+    fun provideRetrofitInterceptor(): RetrofitInterceptor = RetrofitInterceptor()
 
     @Provides
     @Singleton
@@ -102,6 +102,10 @@ object AppModule {
 
     fun provideAppRepositoryWithToken(@API_WITH_TOKEN apiService: ApiService): AppRepository =
         AppRepository(apiService)
+
+    @Provides
+    @Singleton
+    fun provideNetworkManager(@ApplicationContext context: Context) = NetworkManager(context)
 
 }
 

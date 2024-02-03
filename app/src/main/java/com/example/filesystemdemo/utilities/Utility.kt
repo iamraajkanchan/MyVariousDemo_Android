@@ -59,9 +59,4 @@ class Utility(private val context: Context) {
         return false
     }
 
-
-    fun isNetworkConnected() : Boolean {
-        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        return connectivityManager.isDefaultNetworkActive
-    }
 }

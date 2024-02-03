@@ -8,21 +8,23 @@ import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.filesystemdemo.databinding.ActivitySqliteDemoBinding
 import com.example.filesystemdemo.repository.AlbumState
-import com.example.filesystemdemo.utilities.Utility
+import com.example.filesystemdemo.utilities.NetworkManager
 import com.example.filesystemdemo.viewModels.SQLiteDemoViewModel
 import com.example.filesystemdemo.views.adapters.AlbumAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class SQLiteDemoActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySqliteDemoBinding
     private val viewModel by viewModels<SQLiteDemoViewModel>()
-    private val utility = Utility(this@SQLiteDemoActivity)
+
+    @Inject
+    lateinit var networkManager: NetworkManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,12 +35,13 @@ class SQLiteDemoActivity : AppCompatActivity() {
 
     private fun getAlbums() {
         lifecycleScope.launch(Dispatchers.IO) {
-            if (utility.isNetworkConnected()) {
+            if (networkManager.isNetworkAvailable) {
                 viewModel.getAlbumResponse().await()
                 viewModel.getAlbums()
             } else {
                 viewModel.getAlbums()
             }
+
             viewModel.albumState.collectLatest { state ->
                 when (state) {
                     is AlbumState.Loading -> {
@@ -49,9 +52,6 @@ class SQLiteDemoActivity : AppCompatActivity() {
                     }
 
                     is AlbumState.Success -> {
-                        for (album in state.albums) {
-                            println("SQLiteDemoActivity :: title : ${album.title}")
-                        }
                         withContext(Dispatchers.Main) {
                             binding.progressBar.visibility = View.GONE
                             binding.rcvAlbums.visibility = View.VISIBLE
@@ -73,5 +73,10 @@ class SQLiteDemoActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    override fun onDestroy() {
+        networkManager.destroyConnectivityManager()
+        super.onDestroy()
     }
 }
