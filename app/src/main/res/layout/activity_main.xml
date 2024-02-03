@@ -5,7 +5,8 @@
     android:id="@+id/mainCoordinator"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".views.activities.MainActivity">
+    tools:context=".views.activities.MainActivity"
+    tools:ignore="MissingConstraints">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -17,162 +18,130 @@
 
             <Button
                 android:id="@+id/btnFileSystem"
+                style="@style/MainButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/top_margin_to_parent"
                 android:text="File System"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Button
                 android:id="@+id/btnNetworkInfo"
+                style="@style/MainButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/top_margin_to_parent"
                 android:text="Network Info"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/btnFileSystem" />
 
             <Button
                 android:id="@+id/btnViewPagerDemoActivity"
+                style="@style/MainButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/top_margin_to_parent"
                 android:text="View Pager Demo With Activity"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/btnNetworkInfo" />
 
             <Button
                 android:id="@+id/btnViewPagerDemoFragment"
+                style="@style/MainButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/top_margin_to_parent"
                 android:text="View Pager Demo With Fragment"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/btnViewPagerDemoActivity" />
 
             <Button
                 android:id="@+id/btnWorkManagerDemo"
+                style="@style/MainButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/top_margin_to_parent"
                 android:text="Work Manager Demo"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/btnViewPagerDemoFragment" />
 
             <Button
                 android:id="@+id/btnJobSchedulerDemo"
+                style="@style/MainButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/top_margin_to_parent"
                 android:text="Job Scheduler Demo"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/btnWorkManagerDemo" />
 
             <Button
                 android:id="@+id/btnAlarmManagerDemo"
+                style="@style/MainButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/top_margin_to_parent"
                 android:text="Alarm Scheduler Demo"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/btnJobSchedulerDemo" />
 
             <Button
                 android:id="@+id/btnBroadcastReceiverDemo"
+                style="@style/MainButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/top_margin_to_parent"
                 android:text="Broadcast Receiver Demo"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/btnAlarmManagerDemo" />
 
             <Button
                 android:id="@+id/btnTimerDemo"
+                style="@style/MainButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/top_margin_to_parent"
                 android:text="Timer Demo"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/btnBroadcastReceiverDemo" />
 
             <Button
                 android:id="@+id/btnPersistTimerDemo"
+                style="@style/MainButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/top_margin_to_parent"
                 android:text="Persist Timer Demo"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/btnTimerDemo" />
 
             <Button
                 android:id="@+id/btnConcurrencyDemo"
+                style="@style/MainButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/top_margin_to_parent"
                 android:text="Concurrency Demo"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/btnTimerDemo" />
 
             <Button
                 android:id="@+id/btnConnectMPower"
+                style="@style/MainButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/top_margin_to_parent"
                 android:text="Connect MPower"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/btnConcurrencyDemo" />
 
             <Button
                 android:id="@+id/btnScanBarcode"
+                style="@style/MainButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/top_margin_to_parent"
                 android:text="Scan Barcode"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/btnConnectMPower" />
 
             <Button
                 android:id="@+id/btnCustomGraph"
+                style="@style/MainButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/top_margin_to_parent"
                 android:text="Custom Graph"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/btnConnectMPower" />
 
             <Button
                 android:id="@+id/btnWebsocketDemo"
+                style="@style/MainButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/top_margin_to_parent"
                 android:text="Websocket Demo"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/btnCustomGraph" />
 
             <Button
                 android:id="@+id/btnSQLiteDemo"
+                style="@style/MainButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/top_margin_to_parent"
                 android:text="SQLite Demo"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/btnWebsocketDemo" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
