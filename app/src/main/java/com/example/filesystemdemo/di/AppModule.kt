@@ -9,8 +9,10 @@ import com.example.filesystemdemo.db.AppSQLDatabaseImpl
 import com.example.filesystemdemo.repository.AppRepository
 import com.example.filesystemdemo.retrofit.ApiService
 import com.example.filesystemdemo.retrofit.RetrofitHelper
-import com.example.filesystemdemo.retrofit.RetrofitInterceptor
+import com.example.filesystemdemo.retrofit.RetrofitInterceptorForJSONPlaceHolder
+import com.example.filesystemdemo.retrofit.RetrofitInterceptorForUnsplash
 import com.example.filesystemdemo.retrofit.RetrofitInterceptorWithToken
+import com.example.filesystemdemo.retrofit.UnsplashService
 import com.example.filesystemdemo.utilities.DataHelper
 import com.example.filesystemdemo.utilities.NetworkManager
 import dagger.Module
@@ -61,22 +63,43 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideRetrofitInterceptor(): RetrofitInterceptor = RetrofitInterceptor()
+    fun provideRetrofitInterceptorForJSONPlaceHolder(): RetrofitInterceptorForJSONPlaceHolder =
+        RetrofitInterceptorForJSONPlaceHolder()
 
     @Provides
     @Singleton
-    fun provideRetrofit(retrofitInterceptor: RetrofitInterceptor) =
-        RetrofitHelper.getRetrofitInstance(retrofitInterceptor)
+    @RetrofitForJsonPlaceholder
+    fun provideRetrofitForJSONPlaceHolder(retrofitInterceptorForJSONPlaceHolder: RetrofitInterceptorForJSONPlaceHolder) =
+        RetrofitHelper.getRetrofitInstanceForJSONPlaceHolder(retrofitInterceptorForJSONPlaceHolder)
 
     @Provides
     @Singleton
-    fun provideApiServiceWithoutToken(retrofit: Retrofit): ApiService =
+    fun provideApiServiceWithoutToken(@RetrofitForJsonPlaceholder retrofit: Retrofit): ApiService =
         retrofit.create(ApiService::class.java)
 
     @Provides
     @Singleton
-    fun provideAppRepositoryWithoutToken(apiService: ApiService): AppRepository =
-        AppRepository(apiService)
+    fun provideRetrofitInterceptorForUnsplash(): RetrofitInterceptorForUnsplash =
+        RetrofitInterceptorForUnsplash()
+
+    @Provides
+    @Singleton
+    @RetrofitForUnsplash
+    fun provideRetrofitForUnsplash(retrofitInterceptorForUnsplash: RetrofitInterceptorForUnsplash) =
+        RetrofitHelper.getRetrofitInstanceForUnsplash(retrofitInterceptorForUnsplash)
+
+    @Provides
+    @Singleton
+    fun provideUnsplashService(@RetrofitForUnsplash retrofit: Retrofit): UnsplashService =
+        retrofit.create(UnsplashService::class.java)
+
+    @Provides
+    @Singleton
+    fun provideAppRepositoryWithoutToken(
+        apiService: ApiService,
+        unsplashService: UnsplashService
+    ): AppRepository =
+        AppRepository(apiService, unsplashService)
 
 
     const val PREFERENCE_NAME = "AppSharedPreference"
@@ -95,13 +118,16 @@ object AppModule {
     }
 
     fun provideRetrofitForToken(interceptorWithToken: RetrofitInterceptorWithToken) =
-        RetrofitHelper.getRetrofitInstance(interceptorWithToken)
+        RetrofitHelper.getRetrofitInstanceForJSONPlaceHolder(interceptorWithToken)
 
-    fun provideApiServiceWithToken(@RETROFIT_WITH_TOKEN retrofit: Retrofit): ApiService =
+    fun provideApiServiceWithToken(retrofit: Retrofit): ApiService =
         retrofit.create(ApiService::class.java)
 
-    fun provideAppRepositoryWithToken(@API_WITH_TOKEN apiService: ApiService): AppRepository =
-        AppRepository(apiService)
+    fun provideAppRepositoryWithToken(
+        apiService: ApiService,
+        unsplashService: UnsplashService
+    ): AppRepository =
+        AppRepository(apiService, unsplashService)
 
     @Provides
     @Singleton
@@ -111,24 +137,8 @@ object AppModule {
 
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
-annotation class RETROFIT_WITH_TOKEN
+annotation class RetrofitForJsonPlaceholder
 
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
-annotation class RETROFIT_WITHOUT_TOKEN
-
-@Qualifier
-@Retention(AnnotationRetention.BINARY)
-annotation class API_WITH_TOKEN
-
-@Qualifier
-@Retention(AnnotationRetention.BINARY)
-annotation class API_WITHOUT_TOKEN
-
-@Qualifier
-@Retention(AnnotationRetention.BINARY)
-annotation class REPOSITORY_WITH_TOKEN
-
-@Qualifier
-@Retention(AnnotationRetention.BINARY)
-annotation class REPOSITORY_WITHOUT_TOKEN
+annotation class RetrofitForUnsplash

@@ -9,6 +9,7 @@ import androidx.lifecycle.lifecycleScope
 import com.example.filesystemdemo.databinding.ActivitySqliteDemoBinding
 import com.example.filesystemdemo.repository.AlbumState
 import com.example.filesystemdemo.utilities.NetworkManager
+import com.example.filesystemdemo.utilities.Utility
 import com.example.filesystemdemo.viewModels.SQLiteDemoViewModel
 import com.example.filesystemdemo.views.adapters.AlbumAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -63,11 +64,10 @@ class SQLiteDemoActivity : AppCompatActivity() {
                         withContext(Dispatchers.Main) {
                             binding.progressBar.visibility = View.GONE
                             binding.rcvAlbums.visibility = View.GONE
-                            Toast.makeText(
+                            Utility(
                                 this@SQLiteDemoActivity,
-                                state.error.message,
-                                Toast.LENGTH_LONG
-                            ).show()
+                                binding.coordinator
+                            ).showSnackBar(state.error.message ?: "Server Not Found")
                         }
                     }
                 }

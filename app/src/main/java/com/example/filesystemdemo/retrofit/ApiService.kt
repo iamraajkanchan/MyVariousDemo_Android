@@ -9,4 +9,5 @@ interface ApiService {
     // @Headers("Cache-Control: max-age=3600")
     @GET("albums")
     suspend fun getAlbums() : Response<List<Album>>
+
 }

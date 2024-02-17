@@ -5,7 +5,7 @@ import okhttp3.Interceptor
 import okhttp3.Response
 import javax.inject.Inject
 
-class RetrofitInterceptor : Interceptor {
+class RetrofitInterceptorForJSONPlaceHolder : Interceptor {
     @Inject
     lateinit var networkManager: NetworkManager
     override fun intercept(chain: Interceptor.Chain): Response {
